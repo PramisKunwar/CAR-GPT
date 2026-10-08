@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CarGPT — Automotive Assistant</title>
+  <meta name="description" content="CarGPT is an AI assistant for maintenance, diagnostics, buying advice and EV questions.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app">
+
+    <aside class="sidebar" id="sidebar" aria-label="Conversations">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">C</div>
+        <span class="brand-name">CarGPT</span>
+      </div>
+      <button class="new-chat" id="newChat" type="button">
+        <span>New conversation</span><kbd>Ctrl K</kbd>
+      </button>
+      <div class="section-label">History</div>
+      <ul class="history" id="history"></ul>
+      <div class="sidebar-foot">Guidance only. Verify safety-critical work with a certified mechanic.</div>
+    </aside>
+
+    <div class="scrim" id="scrim"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Open conversations" aria-controls="sidebar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 4h12M2 8h12M2 12h12"/>
+          </svg>
+        </button>
+        <span class="topbar-title" id="topTitle">New conversation</span>
+      </header>
+
+      <div class="scroll" id="scroll">
+        <div class="column" id="stage"></div>
+      </div>
+
+      <div class="composer-wrap">
+        <div class="column">
+          <form class="composer" id="form" autocomplete="off">
+            <label class="sr-only" for="input">Message CarGPT</label>
+            <textarea id="input" rows="1" placeholder="Ask about maintenance, warning lights, EVs, buying…" maxlength="2000"></textarea>
+            <button class="send" id="send" type="submit" aria-label="Send message" disabled>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square">
+                <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/>
+              </svg>
+            </button>
+          </form>
+          <p class="composer-hint">Enter to send · Shift+Enter for a new line</p>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

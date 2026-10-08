@@ -7,11 +7,11 @@ import OpenAI from 'openai';
 const PORT = process.env.PORT || 3000;
 const MODEL = process.env.MODEL || 'openai/gpt-4o-mini';
 const BASE_URL = process.env.OPENAI_BASE_URL || 'https://ai.hackclub.com/proxy/v1';
-const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
 
 if (!process.env.OPENAI_API_KEY) {
   console.error('Missing OPENAI_API_KEY in .env');
-  process.exit(1);
+  if (process.env.VERCEL !== '1') process.exit(1);
 }
 
 const openai = new OpenAI({
@@ -23,7 +23,10 @@ const app = express();
 
 app.use(cors({ origin: ALLOWED_ORIGIN }));
 app.use(express.json({ limit: '64kb' }));
-app.use(express.static('public'));
+
+if (process.env.VERCEL !== '1') {
+  app.use(express.static('public'));
+}
 
 app.use('/api/', rateLimit({
   windowMs: 60 * 1000,
@@ -125,8 +128,12 @@ app.get('/api/health', (_req, res) => {
   res.json({ ok: true });
 });
 
-app.listen(PORT, () => {
-  console.log(`CarGPT listening on http://localhost:${PORT}`);
-  console.log(`Model: ${MODEL}`);
-  console.log(`Base URL: ${BASE_URL}`);
-});
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`CarGPT listening on http://localhost:${PORT}`);
+    console.log(`Model: ${MODEL}`);
+    console.log(`Base URL: ${BASE_URL}`);
+  });
+}
+
+export default app;
